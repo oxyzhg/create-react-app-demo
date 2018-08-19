@@ -11,6 +11,9 @@ class Login extends Component {
     validateFields((err, values) => {
       if (!err) {
         console.log(values);
+        sessionStorage.setItem('isAuth', true);
+        message.success('登录成功');
+        this.props.history.push('/');
       }
     });
   };

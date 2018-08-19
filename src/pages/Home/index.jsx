@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { Icon } from 'antd';
+import { Spin } from 'antd';
 import BasicLayout from '@/layouts/BasicLayout';
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   render() {
     return (
       <BasicLayout history={this.props.history}>
-        <h1>Home</h1>
+        <div style={{ textAlign: 'center' }}>
+          <Spin />
+          <h1>Hey!</h1>
+        </div>
       </BasicLayout>
     );
   }

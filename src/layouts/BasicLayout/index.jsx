@@ -10,26 +10,34 @@ class index extends Component {
   state = {
     isAuth: false
   };
+  componentDidMount() {
+    const isAuth = sessionStorage.getItem('isAuth');
+    this.setState({ isAuth: !!isAuth });
+  }
   currentYear() {
     return new Date().getFullYear();
   }
   handleLogin = e => {
-    this.setState({ isAuth: true });
-    message.success('登录成功');
-    // this.props.history.push('/login');
+    if (this.props.history.location.pathname === '/login') {
+      message.info('请登录');
+    } else {
+      this.props.history.push('/login');
+    }
   };
   handleLogout = e => {
     Modal.confirm({
-      title: '确定退出当前账号吗?',
+      title: '是否退出当前账号',
       okType: 'danger',
-      okText: 'Yes',
-      cancelText: 'No',
+      okText: '是',
+      cancelText: '否',
       onOk: () => {
         this.setState({ isAuth: false });
+        sessionStorage.removeItem('isAuth');
         message.success('已退出');
       }
     });
   };
+
   render() {
     return (
       <Layout>
@@ -40,24 +48,24 @@ class index extends Component {
             </a>
           </div>
           <div className="header-title">
-            <div>{this.props.title || '管理系统'}</div>
+            <div>{this.props.title || 'SYSTEM'}</div>
           </div>
           <div className="header-user">
             {this.state.isAuth ? (
               <Icon
                 type="user"
-                size="large"
+                title="退出"
                 style={{ color: '#08c' }}
                 onClick={this.handleLogout}
               />
             ) : (
-              <Icon type="user" size="large" onClick={this.handleLogin} />
+              <Icon type="user" title="登录" onClick={this.handleLogin} />
             )}
           </div>
         </Header>
         <Content className="page__bd">{this.props.children}</Content>
         <Footer className="page__ft">
-          <div>© {this.currentYear()} 青春在线网站 版权所有</div>
+          <span>© {this.currentYear()} 青春在线网站 版权所有</span>
         </Footer>
       </Layout>
     );
