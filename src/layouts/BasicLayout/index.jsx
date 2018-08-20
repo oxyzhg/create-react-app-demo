@@ -11,8 +11,10 @@ class index extends Component {
     isAuth: false
   };
   componentDidMount() {
-    const isAuth = sessionStorage.getItem('isAuth');
-    this.setState({ isAuth: !!isAuth });
+    const { token, expires_at } = sessionStorage;
+    if (token && expires_at) {
+      this.setState({ isAuth: true });
+    }
   }
   currentYear() {
     return new Date().getFullYear();
@@ -31,9 +33,10 @@ class index extends Component {
       okText: '是',
       cancelText: '否',
       onOk: () => {
-        this.setState({ isAuth: false });
-        sessionStorage.removeItem('isAuth');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('expires_at');
         message.success('已退出');
+        this.setState({ isAuth: false });
       }
     });
   };

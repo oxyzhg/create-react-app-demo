@@ -1,6 +1,6 @@
-const initialState = {
+const baseUrl = {
   serve: 'https://api.youthol.cn/api',
   localhost: 'http://localhost:5000/api'
 };
 
-export default (state = initialState.serve) => state;
+export default (state = baseUrl.serve) => state;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, message } from 'antd';
 import BasicLayout from '@/layouts/BasicLayout';
-import LoginForm from './LoginForm';
+import LoginForm from '@/components/LoginForm';
 import './style.scss';
 
 class Login extends Component {
