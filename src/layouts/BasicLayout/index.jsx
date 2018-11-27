@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Layout, Modal, Icon, message } from 'antd';
+import moment from 'moment';
 import LOGO from '@/assets/logo.png';
 import './style.scss';
 
 const { Header, Content, Footer } = Layout;
 
-class index extends Component {
+class BasicLayout extends Component {
   state = {
     isAuth: false
   };
   componentDidMount() {
     const { token, expires_at } = sessionStorage;
-    if (token && expires_at) {
+    if (token && moment().isBefore(expires_at)) {
+      // TODO: 检查是否本地有已登录的用户信息
       this.setState({ isAuth: true });
+    } else {
+      // 未登录
     }
   }
 
@@ -31,15 +36,11 @@ class index extends Component {
       okText: '是',
       cancelText: '否',
       onOk: () => {
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('expires_at');
+        sessionStorage.clear();
         message.success('已退出');
         this.setState({ isAuth: false });
       }
     });
-  };
-  currentYear = () => {
-    return new Date().getFullYear();
   };
 
   render() {
@@ -69,16 +70,15 @@ class index extends Component {
         </Header>
         <Content className="page__bd">{this.props.children}</Content>
         <Footer className="page__ft">
-          <span>© {this.currentYear()} 青春在线网站 版权所有</span>
+          <span>© {new Date().getFullYear()} 青春在线网站 版权所有</span>
         </Footer>
       </Layout>
     );
   }
 }
 
-index.propTypes = {
-  history: PropTypes.object.isRequired,
+BasicLayout.propTypes = {
   title: PropTypes.string
 };
 
-export default index;
+export default withRouter(BasicLayout);
