@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Layout, Modal, Icon, message } from 'antd';
-import './style.scss';
 import LOGO from '@/assets/logo.png';
+import './style.scss';
 
 const { Header, Content, Footer } = Layout;
 
@@ -16,17 +16,15 @@ class index extends Component {
       this.setState({ isAuth: true });
     }
   }
-  currentYear() {
-    return new Date().getFullYear();
-  }
-  handleLogin = e => {
+
+  handleLogin = () => {
     if (this.props.history.location.pathname === '/login') {
       message.info('请登录');
     } else {
       this.props.history.push('/login');
     }
   };
-  handleLogout = e => {
+  handleLogout = () => {
     Modal.confirm({
       title: '是否退出当前账号',
       okType: 'danger',
@@ -39,6 +37,9 @@ class index extends Component {
         this.setState({ isAuth: false });
       }
     });
+  };
+  currentYear = () => {
+    return new Date().getFullYear();
   };
 
   render() {
