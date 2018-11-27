@@ -11,9 +11,10 @@ const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(
-      thunk.withExtraArgument({
-        API
-      })
+      thunk
+      // thunk.withExtraArgument({
+      //   API
+      // })
     ),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )

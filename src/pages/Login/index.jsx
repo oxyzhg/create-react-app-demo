@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Form, message } from "antd";
-import BasicLayout from "@/layouts/BasicLayout";
-import LoginForm from "./components/LoginForm";
-import "./style.scss";
+import React, { Component } from 'react';
+import { Form, message } from 'antd';
+import BasicLayout from '@/layouts/BasicLayout';
+import LoginForm from './components/LoginForm';
+import './style.scss';
 
 class Login extends Component {
   handleSubmit = e => {
@@ -11,9 +11,11 @@ class Login extends Component {
     validateFields((err, values) => {
       if (!err) {
         console.log(values);
-        sessionStorage.setItem("isAuth", true);
-        message.success("登录成功");
-        this.props.history.push("/");
+        sessionStorage.clear();
+        sessionStorage.setItem('token', 'token');
+        sessionStorage.setItem('expires_at', 'expires_at');
+        message.success('登录成功');
+        this.props.history.push('/');
       }
     });
   };

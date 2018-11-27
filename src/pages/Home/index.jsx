@@ -1,28 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Spin } from 'antd';
 import BasicLayout from '@/layouts/BasicLayout';
+import './style.scss';
+
+import { setPageTitle, setUserList } from '@/store/actions';
 
 class Home extends Component {
   componentDidMount() {
-    // console.log(this.props)
+    this.props.setUserList();
   }
 
   render() {
     return (
       <BasicLayout>
-        <div style={{ textAlign: 'center' }}>
+        <div className="text-align-center">
           <Spin />
           <h1>Hey!</h1>
         </div>
+        {this.props.userList &&
+          this.props.userList.map(el => (
+            <div key={el.email}>
+              {el.name} — {el.email}
+            </div>
+          ))}
       </BasicLayout>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  baseUrl: state.global.baseUrl
+  BASE_API: state.global.BASE_API,
+  pageTitle: state.global.pageTitle,
+  userList: state.global.userList
 });
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = dispatch => ({
+  setPageTitle: data => dispatch(setPageTitle(data)),
+  setUserList: data => dispatch(setUserList(data))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);
